@@ -1,5 +1,23 @@
+import random
+import string
+
 def check_age():
-    pass
+
+    try:
+        age = int(input("\nEnter your age: "))
+
+        if age < 0:
+            print("\nAge cannot be negative")
+            return
+        
+        if age < 13:
+            print("\nYou are a child")
+        elif 13 <= age < 18:
+            print("\nYou are a teenager")
+        else:
+            print("\nYou are an adult")
+    except ValueError:
+        print("Please enter a valid integer for age")
 
 # Calculator def
 def add(x, y):
@@ -30,7 +48,8 @@ def calculator():
                 result = multiply(first_num, second_num)
             elif oper_signs ==  "/":
                 if second_num == 0:
-                    return "Error: Cannot divide by zero"
+                    print("Error: Cannot divide by zero")
+                    continue
                 result = divide(first_num, second_num)
             else:
                 print("Invalid operator! Please try again.")
@@ -45,7 +64,18 @@ def calculator():
 
 
 def generate_password():
-    pass
+    try:
+        length = int(input("\nEnter the desired password length: "))
+        if length <= 0:
+            print("Password lenght must be greater than 0")
+            return
+        
+        characters = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(random.choice(characters) for _ in range(length))
+        
+        print(f"\nGenerated password: {password}")
+    except ValueError:
+        print("Please enter a valid number for password lenght!")
 
 def menu():
     while True:
