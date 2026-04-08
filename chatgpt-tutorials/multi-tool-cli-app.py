@@ -1,6 +1,7 @@
 def check_age():
     pass
 
+# Calculator def
 def add(x, y):
     return x + y
 
