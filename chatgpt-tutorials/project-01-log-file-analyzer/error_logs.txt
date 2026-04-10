@@ -1,8 +1,3 @@
-ERROR Logs:
+ERROR Logs
 ERROR: Database connection failed
 ERROR: Timeout occurred
-
-Log Summary:
-ERROR: 2
-WARNING: 1
-INFO: 3
