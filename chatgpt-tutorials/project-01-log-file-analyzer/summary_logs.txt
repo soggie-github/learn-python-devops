@@ -1,0 +1,7 @@
+Summary Logs
+Server started
+User logged in
+Disk space low
+Database connection failed
+Request processed
+Timeout occurred

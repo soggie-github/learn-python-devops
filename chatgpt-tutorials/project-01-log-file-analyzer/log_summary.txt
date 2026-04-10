@@ -1,0 +1,7 @@
+Summary Logs
+INFO: Server started
+INFO: User logged in
+WARNING: Disk space low
+ERROR: Database connection failed
+INFO: Request processed
+ERROR: Timeout occurred

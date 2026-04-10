@@ -1,0 +1,3 @@
+ERROR Logs
+ERROR: Database connection failed
+ERROR: Timeout occurred
