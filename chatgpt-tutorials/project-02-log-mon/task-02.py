@@ -1,5 +1,4 @@
 # Log Monitoring and Alert System
-from json import dumps
 import requests
 import time
 
@@ -15,7 +14,7 @@ def save_to_file(file_name, title, logs, empty_message):
                 out_file.write(log + "\n")
 
 # Function to monitor a log file for new entries containing "ERROR" and send alerts via a webhook
-def alert_logs(file_name, alert_type):
+"""def alert_logs(file_name, alert_type):
     error_logs = []
 # Open the file in read mode and search for lines containing the specified alert_type (e.g., "ERROR"). If found, clean the line by stripping whitespace, store it in the error_logs list, and print it to the console. After processing the file, save the alert logs to "alert_logs.txt" using the save_to_file function. If no logs of the specified type are found, write a message indicating that.
     with open(file_name, 'r') as file:
@@ -41,7 +40,7 @@ def alert_logs(file_name, alert_type):
         return "\n".join(error_logs)
     else:
         return f"No {alert_type} logs found."
-
+"""
 # Function to send an alert message to a specified webhook URL. If the message is empty, the function will return without sending the alert.
 def webhook_alert(app_message):
     url = "https://chat.googleapis.com/v1/spaces/AAQAAYSBTcY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0owxwWYEY9j9bXdaAnCXZKrf7NZvamqd0fWn2YLxRLw"
