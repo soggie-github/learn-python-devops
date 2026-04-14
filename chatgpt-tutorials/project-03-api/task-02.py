@@ -2,18 +2,18 @@ import requests
 from requests.exceptions import HTTPError, Timeout
 import time
 from datetime import datetime
+import argparse
 
 """ 
-    API Monitor Tool that checks the status and response time of 
+    CLI cmmandline API Monitor Tool that checks the status and response time of 
     each API and alerts if any API is down or slow. 
     It runs indefinitely until interrupted by the user.   
 """
 
 
-SLOW_THRESHOLD = 1.0 # SECONDS
 
 # Function to check the status and response time of each API
-def check_apis(urls):
+def check_apis(urls, threshold):
     # Iterate through the list of URLs and make a GET request to each one
     for url in urls:
        
@@ -25,9 +25,9 @@ def check_apis(urls):
             end = time.time()
             elapsed = end - start 
             response.raise_for_status()
-
+    
             # Check if the response time exceeds the slow threshold and print the appropriate message   
-            if elapsed >  SLOW_THRESHOLD:
+            if elapsed >  threshold:
                 print(f"ALERT: {url} -> SLOW ({response.status_code}) - ({elapsed:.3f}s)")
             else:
                 print(f"{url} -> OK {response.status_code} - {elapsed:.3f}s")
@@ -39,13 +39,27 @@ def check_apis(urls):
         except Exception as err:
             print(f"ALERT: {url} -> ERROR: {err}")
 
+def parse_arguments():
+    # Create an argument parser to allow users to specify 
+    # the slow response threshold and check interval
+    parser = argparse.ArgumentParser(description="Monitoring the status and response time of each API ")
+    parser.add_argument("--urls", required=True, help="Comma-separated list of API URLs to monitor")
+    parser.add_argument("--threshold", type=float, default=1.5, help="Slow response threshold in seconds")
+    parser.add_argument("--interval", type=int, default=5, help="Check interval in seconds")
+    return parser.parse_args()
+
 
 def main():
-    urls = [
-        "https://api.ipstack.com", 
-        "http://colormind.io/api"
-    ]
-    interval = 5
+
+    # 
+    args = parse_arguments()
+
+    # Get the check interval from the command-line arguments
+    interval = args.interval
+
+    # Split the comma-separated list of URLs into a list
+    urls = args.urls.split(",")
+
 
     # Run the monitoring loop indefinitely until interrupted by the user
     while True:
@@ -54,13 +68,20 @@ def main():
             print(f"\n[{datetime.now().strftime('%H:%M:%S')}] Checking APIs...")
             print("-" * 50)
 
-            check_apis(urls)
+            # Check the status and response time of each API and alert if any API is down or slow
+            check_apis(urls, args.threshold)   
 
             time.sleep(interval)
 
         except KeyboardInterrupt:
             print("\nMonitoring stopped")
             break
+
+
+
+
+
+
 # Run the main function when the script is executed
 if __name__ == "__main__":
     main()
