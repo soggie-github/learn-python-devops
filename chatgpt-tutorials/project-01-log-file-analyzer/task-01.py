@@ -8,7 +8,6 @@ def analyze_log():
     with open('log.txt', 'r') as file:
         lines = file.readlines()
 
-
     # Iterate through each line in the file and count the occurrences of "ERROR", "WARNING", and "INFO"
     for line in lines:
         # Check if the line contains "ERROR", "WARNING", or "INFO" and update the respective counters

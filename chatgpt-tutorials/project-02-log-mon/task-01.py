@@ -1,8 +1,6 @@
 # Log Monitoring and Alert System
 import time
 
-
-
 def monitor_log(file_name):
     with open(file_name, 'r') as file:
         file.seek(0, 2) # Move the cursor to the end of the file

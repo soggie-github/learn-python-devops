@@ -19,12 +19,10 @@ def input_file():
         
 def error_logs():
 
-
     #   Prompt the user to enter the name of the file and validate its existence using the input_file function
     file_name = input_file()
     error_log_count = 0
     error_logs = []
-        
         
     # Open the file in read mode
     with open(file_name, 'r') as file:
@@ -55,9 +53,6 @@ def error_logs():
             for log in error_logs:
                 out_file.write(log + "\n")
     print("\nSaved to error_logs.txt")
-
-        
-
 
 def all_logs():
 
@@ -93,9 +88,6 @@ def all_logs():
                 out_file.write(log + "\n")
     print("\nSaved to all_logs.txt")
 
-
-
-
 def summary_only():
     file_name = input_file()
     prefixes = ["ERROR:", "WARNING:", "INFO:"]
@@ -116,8 +108,7 @@ def summary_only():
                     newloglist.append(cleaned_line)
                     print(cleaned_line)
                     break
-
-
+                
         # Write the error logs and summary to a new file named "log_summary.txt"
     with open("summary_logs.txt", 'w') as out_file:
         out_file.write("Show summary only\n")

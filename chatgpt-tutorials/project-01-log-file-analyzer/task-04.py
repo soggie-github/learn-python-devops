@@ -4,7 +4,6 @@
 #    return input_file
 
 def analyze_log():
-    
     while True:
         filename = input("Enter the name of the file: ")
             
@@ -19,8 +18,6 @@ def analyze_log():
             with open(filename, 'r') as file:
                 print("\nERROR Log:")
             
-            
-
                 # Iterate through each line in the file and count the occurrences of "ERROR", "WARNING", and "INFO"
                 for line in file:
                     # Check if the line contains "ERROR", "WARNING", or "INFO" and update the respective counters
@@ -54,10 +51,6 @@ def analyze_log():
                 out_file.write(f"WARNING: {warning_count}\n")
                 out_file.write(f"INFO: {info_count}\n")
 
-            
-
-
-
             # If no "ERROR" logs are found, print a message indicating that            
             if error_count == 0:
                 print("No ERROR logs found.")
@@ -66,8 +59,6 @@ def analyze_log():
             print("ERROR: ", error_count)
             print("WARNING: ", warning_count)
             print("INFO: ", info_count)
-
-
 
             break  # Exit the loop after successful analysis
             

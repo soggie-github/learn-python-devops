@@ -11,7 +11,6 @@ from collections import deque, Counter
 import argparse
 import os
 
-
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
 # Open the file in append mode and write the title, logs, or an empty message if no logs are found. 
@@ -73,8 +72,7 @@ def duplicate_check(file_name, threshold, window_seconds):
     recent_error_times = {}  # A dictionary to store timestamps of recent errors for threshold checking
     alerted_errors = set()  # A set to keep track of errors that have already triggered an alert
     
-    with open(file_name, 'r') as file:
-        
+    with open(file_name, 'r') as file:        
         for line in file:
        
             # Check if the line contains "ERROR". 
@@ -115,7 +113,6 @@ def duplicate_check(file_name, threshold, window_seconds):
             recent_error_times[error_message].append(log_time)
             error_counts[error_message] += 1
 
-
             # Remove timestamps from recent_error_times 
             # that are outside the specified time window.
             while (
@@ -144,7 +141,6 @@ def duplicate_check(file_name, threshold, window_seconds):
         # If no duplicates are found, print a message indicating that.
 
         duplicates = {k: v for k, v in error_counts.items() if v > 1}
-
 
         if duplicates:
             for error, count in duplicates.items():
@@ -207,7 +203,6 @@ def monitor_log(file_name, threshold, window_seconds):
                     webhook_alert(alert_message)
                     alerted_errors.add(error_message)  # Mark this error as having triggered an alert
 
-                
                     save_to_file(
                         "alerts.txt", 
                         "New Alert", 

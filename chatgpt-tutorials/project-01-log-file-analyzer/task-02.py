@@ -4,7 +4,6 @@
 #    return input_file
 
 def analyze_log():
-    
     while True:
         filename = input("Enter the name of the file: ")
             

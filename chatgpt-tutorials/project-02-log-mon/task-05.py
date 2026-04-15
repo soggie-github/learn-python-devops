@@ -9,7 +9,6 @@ import time
 from datetime import datetime, timedelta
 from collections import deque, Counter
 
-
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
 # Open the file in append mode and write the title, logs, or an empty message if no logs are found. 
@@ -61,7 +60,6 @@ def parse_timestamp(log_line):
 # in a log file and count their occurrences.
 def duplicate_check(file_name, threshold=5, window_seconds=10):
        
-       
     time_window = timedelta(seconds=window_seconds)
     error_counts = Counter()
     recent_error_times = {}  # A dictionary to store timestamps of recent errors for threshold checking
@@ -69,8 +67,7 @@ def duplicate_check(file_name, threshold=5, window_seconds=10):
     
     with open(file_name, 'r') as file:
         
-        for line in file:
-       
+        for line in file:       
             # Check if the line contains "ERROR". 
             # If it does not, skip to the next line. 
             # If it does, clean the line by stripping whitespace, 
@@ -95,7 +92,6 @@ def duplicate_check(file_name, threshold=5, window_seconds=10):
 
             recent_error_times[error_message].append(log_time)
             error_counts[error_message] += 1
-
 
             # Remove timestamps from recent_error_times 
             # that are outside the specified time window.
@@ -125,16 +121,13 @@ def duplicate_check(file_name, threshold=5, window_seconds=10):
 
         duplicates = {k: v for k, v in error_counts.items() if v > 1}
 
-
         if duplicates:
             for error, count in duplicates.items():
                 print(f"{error} -> {count} time(s)")
         else:
             print("No duplicate errors found.")
 
-                 
 file_name = input("Enter log file: ")
-
 
 try:
     # Call the duplicate_check function to analyze the log file 

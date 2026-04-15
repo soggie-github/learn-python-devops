@@ -11,13 +11,10 @@ def save_to_file(filename, title, logs, empty_message):
             for log in logs:
                 out_file.write(log + "\n")
 
-
-        
 def error_logs(file_name, output_file="error_logs.txt"):
 
     error_logs = []
-        
-        
+                
     # Open the file in read mode
     with open(file_name, 'r') as file:
         print("\n=== ERROR logs ===")
@@ -43,12 +40,7 @@ def error_logs(file_name, output_file="error_logs.txt"):
     )
     print(f"\nSaved to {output_file}")
 
-        
-
-
 def all_logs(file_name, output_file="all_logs.txt"):
-
-
     log_types = ["ERROR", "WARNING", "INFO"]
     newloglist = []
 
@@ -74,14 +66,10 @@ def all_logs(file_name, output_file="all_logs.txt"):
     )
     print(f"\nSaved to {output_file}")
 
-
-
-
 def summary_only(file_name, output_file="summary_logs.txt"):
 
     prefixes = ["ERROR:", "WARNING:", "INFO:"]
     newloglist = []
-
 
     # Open the file in read mode
     with open(file_name, 'r') as file:
@@ -99,7 +87,6 @@ def summary_only(file_name, output_file="summary_logs.txt"):
                     print(cleaned_line)
                     break
 
-
     # Write the error logs and summary to a new file named "log_summary.txt"
     save_to_file(
         output_file,
@@ -108,8 +95,6 @@ def summary_only(file_name, output_file="summary_logs.txt"):
         "No summary logs found"
     )
     print(f"\nSaved to {output_file}")
-
-
 
 # Use argparse to allow the user to specify the log file and analysis mode (all, error, summary) as command-line arguments. Based on the user's choice, call the corresponding function to perform the analysis and display the results.
 parser = argparse.ArgumentParser(description="Log File Analyzer and extract ERROR/WARNING/INFO logs from a log file and save the results to a new file.")

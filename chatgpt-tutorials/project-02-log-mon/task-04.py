@@ -9,7 +9,6 @@ import time
 from datetime import datetime, timedelta
 from collections import deque, Counter
 
-
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
 # Open the file in append mode and write the title, logs, or an empty message if no logs are found. 
@@ -67,7 +66,6 @@ def duplicate_check(file_name):
 
        with open(file_name, 'r') as file:
 
-        
         #file.seek(0, 2) # Move th cursor to the end of the file
         for line in file:
             # Check if the line contains "ERROR". 
@@ -115,10 +113,8 @@ def duplicate_check(file_name):
             
         if not found_duplicates:
             print(f"No duplicate errors found.")
-
                  
 file_name = input("Enter log file: ")
-
 
 try:
     # Call the duplicate_check function to analyze the log file 

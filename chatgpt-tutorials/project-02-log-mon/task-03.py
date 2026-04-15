@@ -6,8 +6,6 @@ import requests
 import time
 from collections import Counter
 
-
-
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
 # Open the file in append mode and write the title, logs, or an empty message if no logs are found. Each log is written on a new line.
@@ -18,7 +16,6 @@ def save_to_file(file_name, title, logs, empty_message):
         else:
             for log in logs:
                 out_file.write(log + "\n")
-
 
 # Function to send an alert message to a specified webhook URL. If the message is empty, the function will return without sending the alert.
 def webhook_alert(app_message):
@@ -102,7 +99,6 @@ def duplicate_check(file_name):
             
             if not found_duplicates:
                  print(f"No duplicate errors found.")
-
                  
 file_name = input("Enter log file: ")
 
