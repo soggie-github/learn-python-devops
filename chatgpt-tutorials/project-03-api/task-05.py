@@ -4,31 +4,23 @@ import time
 from datetime import datetime
 import argparse
 import os
+from colorama import Fore, Style, init
+
+# Initialize Colorama
+init()
 
 """ 
     CLI cmmandline API Monitor Tool for terminal dashboard (live-updating screen) that checks the status and response time of 
     each API and alerts if any API is down or slow. results are saved to a file with a timestamp. 
     The tool accepts a list of API URLs, a slow response threshold, and a check interval as command-line arguments.
-    It runs indefinitely until interrupted by the user.    
+    It runs indefinitely until interrupted by the user. Add Color Output
+    OK → green  
+SLOW → yellow  
+DOWN → red  
 """
 # Function to clear the terminal screen based on the operating system
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
-
-# Function to save logs to a file with a title and handle empty log lists
-def save_to_file(file_name, title, logs, empty_message):
-# Open the file in append mode and write the title, logs, or an empty message if no logs are found. 
-# Each log is written on a new line.
-    with open(file_name, 'a') as  out_file:
-        out_file.write(title + "\n")
-        
-        # If the logs list is empty, write the empty_message to the file. Otherwise, write each log entry on a new line.
-        if not logs:
-            out_file.write(empty_message + "\n")
-        else:
-            # Write each log entry from the logs list to the file, followed by a newline character.
-            for log in logs:
-                out_file.write(log + "\n")
 
 # Function to check the status and response time of each API
 def check_apis(urls, threshold, timeout):
@@ -71,8 +63,15 @@ def display_dashboard(results):
     # and response time for each API in a formatted manner.  
     for url, status, elapsed in results:
         time_display = f"{elapsed:.2f}s" if elapsed else "_"
-        print(f"{url:30} {status:25} {time_display}")
+        if status == "OK":
+            print(f"{url:30}", Fore.GREEN + f"{status:25}" + Style.RESET_ALL, f"{time_display}")
+        elif status == "SLOW":
+            print(f"{url:30}", Fore.YELLOW + f"{status:25}" + Style.RESET_ALL, f"{time_display}")
+        else:
+            print(f"{url:30}", Fore.RED + f"{status:25}" + Style.RESET_ALL, f"{time_display}")
     print("_" * 70)
+
+    
 
 def parse_arguments():
     # Create an argument parser to allow users to specify 
