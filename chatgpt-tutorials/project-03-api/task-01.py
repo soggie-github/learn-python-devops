@@ -8,8 +8,6 @@ from datetime import datetime
     each API and alerts if any API is down or slow. 
     It runs indefinitely until interrupted by the user.   
 """
-
-
 SLOW_THRESHOLD = 1.0 # SECONDS
 
 # Function to check the status and response time of each API
@@ -31,14 +29,12 @@ def check_apis(urls):
                 print(f"ALERT: {url} -> SLOW ({response.status_code}) - ({elapsed:.3f}s)")
             else:
                 print(f"{url} -> OK {response.status_code} - {elapsed:.3f}s")
-
         except Timeout:
             print(f"ALERT: {url} -> TIMEOUT")
         except HTTPError as http_err:
             print(f"ALERT: {url} -> HTTP ERROR: {http_err}")
         except Exception as err:
             print(f"ALERT: {url} -> ERROR: {err}")
-
 
 def main():
     urls = [

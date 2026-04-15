@@ -9,9 +9,6 @@ import argparse
     each API and alerts if any API is down or slow. 
     It runs indefinitely until interrupted by the user.   
 """
-
-
-
 # Function to check the status and response time of each API
 def check_apis(urls, threshold):
     # Iterate through the list of URLs and make a GET request to each one
@@ -31,7 +28,6 @@ def check_apis(urls, threshold):
                 print(f"ALERT: {url} -> SLOW ({response.status_code}) - ({elapsed:.3f}s)")
             else:
                 print(f"{url} -> OK {response.status_code} - {elapsed:.3f}s")
-
         except Timeout:
             print(f"ALERT: {url} -> TIMEOUT")
         except HTTPError as http_err:
@@ -48,7 +44,6 @@ def parse_arguments():
     parser.add_argument("--interval", type=int, default=5, help="Check interval in seconds")
     return parser.parse_args()
 
-
 def main():
 
     # 
@@ -60,11 +55,9 @@ def main():
     # Split the comma-separated list of URLs into a list
     urls = args.urls.split(",")
 
-
     # Run the monitoring loop indefinitely until interrupted by the user
     while True:
         try:
-
             print(f"\n[{datetime.now().strftime('%H:%M:%S')}] Checking APIs...")
             print("-" * 50)
 
@@ -76,11 +69,6 @@ def main():
         except KeyboardInterrupt:
             print("\nMonitoring stopped")
             break
-
-
-
-
-
 
 # Run the main function when the script is executed
 if __name__ == "__main__":

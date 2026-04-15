@@ -71,8 +71,6 @@ def display_dashboard(results):
             print(f"{url:30}", Fore.RED + f"{status:25}" + Style.RESET_ALL, f"{time_display}")
     print("_" * 70)
 
-    
-
 def parse_arguments():
     # Create an argument parser to allow users to specify 
     # the slow response threshold and check interval

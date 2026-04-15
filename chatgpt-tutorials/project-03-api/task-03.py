@@ -10,7 +10,6 @@ import argparse
     It runs indefinitely until interrupted by the user.   
 """
 
-
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
 # Open the file in append mode and write the title, logs, or an empty message if no logs are found. 
@@ -29,17 +28,13 @@ def save_to_file(file_name, title, logs, empty_message):
 # Function to check the status and response time of each API
 def check_apis(urls, threshold, timeout):
 
-
     success = 0
     slow = 0
     fail = 0
 
     # Iterate through the list of URLs and make a GET request to each one
     for url in urls:
-       
         try:
-            
-
             # Record the start time, make the GET request, 
             # and record the end time
             start = time.time()
@@ -49,19 +44,13 @@ def check_apis(urls, threshold, timeout):
 
             response.raise_for_status()
     
-
-
             # Check if the response time exceeds the slow threshold and print the appropriate message   
             if elapsed >  threshold:
                 slow += 1
                 print(f"ALERT: {url} -> SLOW ({response.status_code}) - ({elapsed:.3f}s)")
-    
             else:
-
                 success += 1
                 print(f"{url} -> OK {response.status_code} - {elapsed:.3f}s")
-            
-
         except Timeout:
             fail += 1
             print(f"ALERT: {url} -> TIMEOUT")
@@ -72,8 +61,6 @@ def check_apis(urls, threshold, timeout):
             fail += 1
             print(f"ALERT: {url} -> ERROR: {err}")
         
-
-
     summary = (f"\nSummary: OK={success}, SLOW={slow}, FAIL={fail}")
     print(summary)
     save_to_file(
@@ -82,7 +69,6 @@ def check_apis(urls, threshold, timeout):
             [summary], 
             "No new Summary."
         )
-
 
 def parse_arguments():
     # Create an argument parser to allow users to specify 
@@ -93,7 +79,6 @@ def parse_arguments():
     parser.add_argument("--interval", type=int, default=5, help="Check interval in seconds")
     parser.add_argument("--timeout", type=int, default=5, help="Request timeout in seconds")
     return parser.parse_args()
-
 
 def main():
 
@@ -109,12 +94,9 @@ def main():
     for url in parts:
         urls.append(url.strip())
     
-
-
     # Run the monitoring loop indefinitely until interrupted by the user
     while True:
         try:
-
             print(f"\n[{datetime.now().strftime('%H:%M:%S')}] Checking APIs...")
             print("-" * 50)
 
@@ -126,12 +108,7 @@ def main():
         except KeyboardInterrupt:
             print("\nMonitoring stopped")
             break
-
-
-
-
-
-
+        
 # Run the main function when the script is executed
 if __name__ == "__main__":
     main()
