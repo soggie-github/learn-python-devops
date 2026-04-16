@@ -135,7 +135,6 @@ def main():
             display_dashboard(results)
             time.sleep(args.interval)
             
-
         except KeyboardInterrupt:
             print("\nMonitoring stopped")
             break
