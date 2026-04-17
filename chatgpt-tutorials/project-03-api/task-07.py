@@ -8,10 +8,11 @@ from rich.live import Live
 from rich.table import Table
 
 """ 
-    CLI cmmandline API Monitor Tool for terminal dashboard (live-updating screen) that checks the status and response time of 
-    each API and alerts if any API is down or slow. results are saved to a file with a timestamp. 
-    The tool accepts a list of API URLs, a slow response threshold, and a check interval as command-line arguments.
-    It runs indefinitely until interrupted by the user. Add Color Output
+    CLI cmmandline API Monitor Tool for terminal dashboard (live-updating screen) that checks the 
+    status and response time of each API and alerts if any API is down or slow. results are saved 
+    to a file with a timestamp. The tool accepts a list of API URLs, a slow response threshold, and 
+    a check interval as command-line arguments.It runs indefinitely until interrupted by the user. 
+    Add Color Output
     
     OK → green  
     SLOW → yellow  
