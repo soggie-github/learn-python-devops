@@ -1,13 +1,23 @@
 name: CodeQL Python Scan
 
+# Using pull_request_target because PRs from forks cannot upload CodeQL results
+# with the default pull_request event. This runs the workflow in the context
+# of the base repository, giving CodeQL the required permissions.
 on:
-  pull_request:
-    branches: [ "main" ]  # Scan PRs targeting main branch
+  pull_request_target:
+    branches: [ "main" ]
 
 permissions:
+  # Allows reading repository contents
   contents: read
-  security-events: write   # Required to upload results to Security tab
+
+  # Required for uploading CodeQL SARIF results to the Security tab
+  security-events: write
+
+  # Needed for CodeQL to access workflow run metadata
   actions: read
+
+  # Allows reading PR metadata (required when using pull_request_target)
   pull-requests: read
 
 jobs:
@@ -16,22 +26,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
+      # Checkout the repository code
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
-      # Step 2: Initialize CodeQL for Python
+      # Initialize CodeQL for Python analysis
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
           languages: python
 
-      # Step 3: Install dependencies (optional but recommended)
+      # Install Python dependencies if requirements.txt exists
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # Step 4: Perform CodeQL analysis
+      # Run CodeQL analysis and upload results
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
