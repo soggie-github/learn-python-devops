@@ -7,6 +7,7 @@ on:
 permissions:
   contents: read
   security-events: write   # Required to upload results to Security tab
+  actions: read
 
 jobs:
   analyze:
@@ -16,11 +17,11 @@ jobs:
     steps:
       # Step 1: Checkout repository
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Step 2: Initialize CodeQL for Python
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: python
 
@@ -32,4 +33,4 @@ jobs:
 
       # Step 4: Perform CodeQL analysis
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
