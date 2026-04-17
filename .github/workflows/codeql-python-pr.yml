@@ -8,6 +8,7 @@ permissions:
   contents: read
   security-events: write   # Required to upload results to Security tab
   actions: read
+  pull-requests: read
 
 jobs:
   analyze:
