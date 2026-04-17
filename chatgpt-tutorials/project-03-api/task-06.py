@@ -14,9 +14,10 @@ init()
     each API and alerts if any API is down or slow. results are saved to a file with a timestamp. 
     The tool accepts a list of API URLs, a slow response threshold, and a check interval as command-line arguments.
     It runs indefinitely until interrupted by the user. Add Color Output
+    
     OK → green  
-SLOW → yellow  
-DOWN → red  
+    SLOW → yellow  
+    DOWN → red  
 """
 # Function to clear the terminal screen based on the operating system
 def clear_screen():
@@ -138,7 +139,6 @@ def main():
         except KeyboardInterrupt:
             print("\nMonitoring stopped")
             break
-        print(f"\nNext check in {args.interval}s...")
 # Run the main function when the script is executed
 if __name__ == "__main__":
     main()
