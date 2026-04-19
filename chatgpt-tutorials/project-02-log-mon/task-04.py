@@ -8,6 +8,7 @@ import requests
 import time
 from datetime import datetime, timedelta
 from collections import deque, Counter
+import os
 
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
@@ -27,7 +28,10 @@ def save_to_file(file_name, title, logs, empty_message):
 # Function to send an alert message to a specified webhook URL. 
 # If the message is empty, the function will return without sending the alert.
 def webhook_alert(app_message):
-    url = "https://chat.googleapis.com/v1/spaces/AAQAAYSBTcY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0owxwWYEY9j9bXdaAnCXZKrf7NZvamqd0fWn2YLxRLw"
+    url = os.getenv("WEBHOOK_URL")
+    if not url:
+        print("Error: WEBHOOK_URL environment variable is not set.")
+        return    
     
     # Check if log_text is empty before sending the alert. If it is empty, print an error message and return without sending the alert.
     if not app_message:
