@@ -7,13 +7,13 @@ from requests.exceptions import HTTPError
 import time
 from datetime import datetime
 
-def check_apis(urls, threshold):
+def check_apis(urls, threshold, timeout):
     results = []
 
     for url in urls:
         try:
             start = time.time()
-            response = requests.get(url)
+            response = requests.get(url, timeout=timeout)
             elapsed = time.time() - start
 
             response.raise_for_status()
@@ -25,6 +25,14 @@ def check_apis(urls, threshold):
         except (HTTPError, requests.RequestException) as e:
             status = "DOWN"
             elapsed = None
-        results.append(url, status, elapsed)
+        results.append((url, status, elapsed))
     
     return results
+timeout = 5
+threshold = 2
+url = [
+    "https://api.example.com",
+    "https://api.ipstack.com", 
+    "http://colormind.io/api"]
+
+print(check_apis(url, threshold, timeout))
