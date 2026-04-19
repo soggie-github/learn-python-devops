@@ -1,0 +1,14 @@
+{
+  "apis": [
+    "https://api.github.com",
+    "https://example.com",
+    "https://api.ipstack.com", 
+    "http://colormind.io/api"
+  ],
+  "logs": [
+    "app.log"
+  ],
+  "threshold": 1.5,
+  "interval": 5,
+  "error_limit": 3
+}
