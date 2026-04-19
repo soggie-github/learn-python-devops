@@ -4,6 +4,8 @@ name: CodeQL Python Scan
 # with the default pull_request event. This runs the workflow in the context
 # of the base repository, giving CodeQL the required permissions.
 on:
+  push:
+    branches: [ "main" ]
   pull_request_target:
     branches: [ "main" ]
 
