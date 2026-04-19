@@ -165,13 +165,20 @@ def monitor_log(file_name, threshold, window_seconds):
                 continue
             if "ERROR" not in line:
                 continue
-
+            
+            # Clean the line by stripping whitespace and parse the timestamp. 
+            # If the timestamp cannot be parsed (i.e., if parse_timestamp returns None), 
+            # skip to the next line.
             cleaned_line = line.strip()
             log_time = parse_timestamp(cleaned_line)
 
             if not log_time:
                 continue  # Skip lines with invalid timestamps
             
+            # Split the cleaned line on "ERROR:" to extract the error message. 
+            # If the split does not result in at least two parts, skip to the next line. 
+            # Otherwise, take the second part of the split (the error message), 
+            # strip any leading or trailing whitespace, and use it as the error message.
             parts = line.strip().split("ERROR:", 1)
             if len(parts) < 2:
                 continue  # Skip lines that do not contain a valid error message

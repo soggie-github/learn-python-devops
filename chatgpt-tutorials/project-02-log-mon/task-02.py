@@ -1,7 +1,7 @@
 # Log Monitoring and Alert System
 import requests
 import time
-
+import os
 # Function to save logs to a file with a title and handle empty log lists
 def save_to_file(file_name, title, logs, empty_message):
 # Open the file in append mode and write the title, logs, or an empty message if no logs are found. Each log is written on a new line.
@@ -43,8 +43,11 @@ def save_to_file(file_name, title, logs, empty_message):
 """
 # Function to send an alert message to a specified webhook URL. If the message is empty, the function will return without sending the alert.
 def webhook_alert(app_message):
-    url = "https://chat.googleapis.com/v1/spaces/AAQAAYSBTcY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0owxwWYEY9j9bXdaAnCXZKrf7NZvamqd0fWn2YLxRLw"
-    
+    url = os.getenv("WEBHOOK_URL")
+    if not url:
+        print("Error: WEBHOOK_URL environment variable is not set.")
+        return
+        
     # Check if log_text is empty before sending the alert. If it is empty, print an error message and return without sending the alert.
     if not app_message:
         return
@@ -58,8 +61,8 @@ def webhook_alert(app_message):
     except Exception as e:
         print(f"webhook failed: {e}")
 
-        print(response)
-        print("DEBUG payload:", payload)
+        #print(response)
+        #print("DEBUG payload:", payload)
 
 # Function to monitor a log file for new entries containing "ERROR". If an "ERROR" is found, it sends an alert message via the webhook_alert function and saves the alert to "alerts.txt" using the save_to_file function. The function continuously monitors the log file until interrupted by the user (e.g., via a keyboard interrupt).
 def monitor_log(file_name):
