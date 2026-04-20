@@ -13,7 +13,7 @@ def check_apis(urls, threshold, timeout):
     for url in urls:
         try:
             start = time.time()
-            response = requests.get(url, timeout=timeout)
+            response = requests.get(url, timeout=5.0)
             elapsed = time.time() - start
 
             response.raise_for_status()
