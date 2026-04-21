@@ -5,8 +5,6 @@ from pathlib import Path
 # This module provides functionality to monitor log files for error 
 # patterns and generate alerts when certain thresholds are exceeded.  
 def _extract_error_key(line):
-    text = line.strip()
-
     """
     The _extract_error_key function takes a line of text as input and 
     attempts to extract an error key from it. It checks if the line 
@@ -17,6 +15,7 @@ def _extract_error_key(line):
     This function is used to identify and extract specific error keys 
     from log lines for further processing in the log monitoring system.
     """
+    text = line.strip()
     parts = text.split("ERROR:", 1)
     if len(parts) < 2:
         return None
