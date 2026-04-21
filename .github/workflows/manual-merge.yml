@@ -1,0 +1,35 @@
+name: Manual PR Merge
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull Request number to merge'
+        required: true
+        type: number
+      merge_method:
+        description: 'Merge method'
+        required: false
+        default: 'merge'
+        type: choice
+        options:
+          - merge
+          - squash
+          - rebase
+
+jobs:
+  merge-pr:
+    name: Merge Pull Request
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Merge PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ inputs.pr_number }} \
+            --repo ${{ github.repository }} \
+            --${{ inputs.merge_method }}
