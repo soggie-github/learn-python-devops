@@ -1,6 +1,6 @@
 {
   "apis": [
-    "https://api.github.com",
+    "https://api.banjul.com",
     "https://api.example.com",
     "https://api.ipstack.com", 
     "http://colormind.io/api"

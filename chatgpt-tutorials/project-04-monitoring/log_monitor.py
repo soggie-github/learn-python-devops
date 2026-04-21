@@ -58,7 +58,10 @@ def check_logs(log_files, error_limit, state=None):
     # be converted to a Counter.
     offsets = state.setdefault("offsets", {})
     counts_obj = state.get("counts", {})
-    counts = counts_obj if isinstance(counts_obj, Counter) else Counter(counts_obj)
+    if isinstance(counts_obj, Counter):
+        counts = counts_obj
+    else:
+        counts = Counter(counts_obj)
     state["counts"] = counts
 
     alerts = []
