@@ -43,7 +43,11 @@ def load_config(config_path):
         config = json.load(file)
     
     required = ["apis", "logs", "threshold", "interval", "error_limit"]
-    missing = [key for key in required if key not in config]
+    missing = []  # store keys that are not found in config
+
+    for key in required:
+        if key not in config:
+            missing.append(key)
 
     if missing:
         raise ValueError(f"Missing config keys: {', '.join(missing)}")
@@ -61,9 +65,21 @@ def print_cycle_summary(api_results, log_alert_count):
     results for each cycle, allowing users to quickly assess the status of their 
     APIs and logs.
     """
-    ok = sum(1 for _, status, _ in api_results if status == "OK")
-    slow = sum(1 for _, status, _ in api_results if status == "SLOW")
-    down = sum(1 for _, status, _ in api_results if status == "DOWN")
+    # Start counters at 0
+    ok = 0
+    slow = 0
+    down = 0
+
+    # Go through each API result one by one
+    for url, status, elapsed in api_results:
+        if status == "OK":
+            ok += 1
+        elif status == "SLOW":
+            slow += 1
+        elif status == "DOWN":
+            down += 1
+
+    # Show one summary line
     print(f"Summary: OK={ok} SLOW={slow} DOWN={down} NEW_ERROR_ALERTS={log_alert_count}")
 
 def main():
