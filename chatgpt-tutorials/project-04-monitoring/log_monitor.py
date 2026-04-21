@@ -8,15 +8,13 @@ from pathlib import Path
 def _extract_error_key(line):
     text = line.strip()
 
-    if "ERROR" not in text:
+    if "ERROR:" not in text:
         return None
-    if "ERROR" in text:
-        # Extract the error key from the log line by splitting the text at "ERROR:" 
-        # and taking the part after it. The extracted key is then stripped of leading 
-        # and trailing whitespace before being returned. If "ERROR" is not found in 
-        # the text, the function returns None.
-        return text.split("ERROR:", 1)[1].strip()
-    return
+    # Extract the error key from the log line by splitting the text at "ERROR:" 
+    # and taking the part after it. The extracted key is then stripped of leading 
+    # and trailing whitespace before being returned. If "ERROR:" is not found in 
+    # the text, the function returns None.
+    return text.split("ERROR:", 1)[1].strip()
 
 
 
