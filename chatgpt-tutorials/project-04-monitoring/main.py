@@ -29,7 +29,7 @@ def parse_arguments():
 def load_config(config_path):
     """
     The load_config function reads a JSON configuration file from the 
-    specified path,validates the presence of required keys, and sets 
+    specified path, validates the presence of required keys, and sets 
     default values for optional keys. It returns the configuration as a dictionary.
     The function first opens the configuration file in read mode with UTF-8 encoding
     and loads its contents into a dictionary using json.load(). It then checks for 
