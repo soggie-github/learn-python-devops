@@ -59,34 +59,43 @@ def check_logs(log_files, error_limit, state=None):
 
     for file_name in log_files:
         path = Path(file_name)
-        if not path.exists():
+
+        try:
+            if not path.exists():
+                continue
+
+            # Open the log file for reading with UTF-8 encoding and error handling. 
+            # The file is opened in read mode, and the encoding is set to "utf-8" 
+            # to ensure that it can handle a wide range of characters. The errors 
+            # parameter is set to "replace" to replace any characters that cannot 
+            # be decoded with a placeholder character, preventing the program from 
+            # crashing due to encoding issues. Before seeking to the last saved
+            # position, validate that the stored offset is not beyond the current
+            # end of the file so log truncation or rotation does not cause the
+            # monitor to miss new content. If any filesystem-related error occurs
+            # while checking, opening, reading, or updating the file position,
+            # skip that file and continue monitoring the others.
+            with path.open("r", encoding="utf-8", errors="replace") as file:
+                stored_offset = offsets.get(file_name, 0)
+                file.seek(0, 2)
+                current_size = file.tell()
+
+                if stored_offset > current_size:
+                    stored_offset = 0
+
+                file.seek(stored_offset)
+
+                for line in file:
+                    key = _extract_error_key(line)
+                    if key is None:
+                        continue
+
+                    counts[key] += 1
+                    if counts[key] == error_limit:
+                        alerts.append(
+                            f"ALERT ERROR LIMIT '{key}' occurred {counts[key]} times"
+                        )
+                offsets[file_name] = file.tell()
+        except (OSError, IOError):
             continue
-
-        # Open the log file for reading with UTF-8 encoding and error handling. 
-        # The file is opened in read mode, and the encoding is set to "utf-8" 
-        # to ensure that it can handle a wide range of characters. The errors 
-        # parameter is set to "replace" to replace any characters that cannot 
-        # be decoded with a placeholder character, preventing the program from 
-        # crashing due to encoding issues. The function seeks to the last read 
-        # position in the file using the offset stored in the state dictionary, 
-        # allowing it to continue reading from where it left off in previous 
-        # calls. It then iterates through each line in the file, extracting 
-        # error keys and counting their occurrences. If the count of a specific 
-        # error key reaches the defined error limit, an alert message is generated 
-        # and added to the list of alerts. Finally, the function updates the offset
-        # for the log file in the state dictionary to reflect the new read position.
-        with path.open("r", encoding="utf-8", errors="replace") as file:
-            file.seek(offsets.get(file_name, 0))
-
-            for line in file:
-                key = _extract_error_key(line)
-                if key is None:
-                    continue
-                    
-                counts[key] += 1
-                if counts[key] == error_limit:
-                    alerts.append(
-                        f"ALERT ERROR LIMIT '{key}' occurred {counts[key]} times"
-                    )
-            offsets[file_name] = file.tell()
     return alerts, state
