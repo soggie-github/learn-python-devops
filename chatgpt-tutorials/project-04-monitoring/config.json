@@ -1,7 +1,7 @@
 {
   "apis": [
     "https://api.github.com",
-    "https://example.com",
+    "https://api.example.com",
     "https://api.ipstack.com", 
     "http://colormind.io/api"
   ],
@@ -10,5 +10,6 @@
   ],
   "threshold": 1.5,
   "interval": 5,
-  "error_limit": 3
+  "error_limit": 3,
+  "timeout": 5
 }
