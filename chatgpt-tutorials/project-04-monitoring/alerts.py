@@ -31,8 +31,9 @@ def alert(app_message):
     # Send the alert message to the specified webhook URL using a POST request. If the request is successful, print the status code of the response. If an exception occurs during the request, catch it and print an error message along with the exception details. Additionally, print the response and the payload for debugging purposes.
     try:
         # Send a POST request to the specified webhook URL with the payload as JSON data. The response from the server is stored in the 'response' variable.
-        response = requests.post(url, json=payload)
+        response = requests.post(url, json=payload, timeout=10)
+        response.raise_for_status()
         print(f"webhook sent: {response.status_code}")
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         print(f"webhook failed: {e}")
         print("DEBUG payload:", payload)
