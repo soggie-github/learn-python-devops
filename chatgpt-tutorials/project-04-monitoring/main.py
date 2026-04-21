@@ -4,7 +4,6 @@ import json
 import time
 from pathlib import Path
 from alerts import alert
-from collections import Counter
 from api_monitor import check_apis
 from log_monitor import check_logs
 
