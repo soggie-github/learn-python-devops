@@ -41,7 +41,7 @@ def check_logs(log_files, error_limit, state=None):
         # will store the last read position for each log file, 
         # while "counts" is a Counter object that will keep track 
         # of the count of each error key encountered in the log files.
-        state = {"offset": {}, "counts": Counter()}
+        state = {"offsets": {}, "counts": Counter()}
 
     # Ensure that the "offsets" key in the state dictionary is 
     # initialized as an empty dictionary if it does not already exist. 
