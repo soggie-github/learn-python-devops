@@ -7,13 +7,20 @@ from pathlib import Path
 def _extract_error_key(line):
     text = line.strip()
 
-    if "ERROR:" not in text:
+    """
+    The _extract_error_key function takes a line of text as input and 
+    attempts to extract an error key from it. It checks if the line 
+    contains the substring "ERROR:". If it does, it splits the line at 
+    the first occurrence of "ERROR:" and returns the part after "ERROR:" 
+    as the error key, stripped of any leading or trailing whitespace. 
+    If the line does not contain "ERROR:", the function returns None. 
+    This function is used to identify and extract specific error keys 
+    from log lines for further processing in the log monitoring system.
+    """
+    parts = text.split("ERROR:", 1)
+    if len(parts) < 2:
         return None
-    # Extract the error key from the log line by splitting the text at "ERROR:" 
-    # and taking the part after it. The extracted key is then stripped of leading 
-    # and trailing whitespace before being returned. If "ERROR:" is not found in 
-    # the text, the function returns None.
-    return text.split("ERROR:", 1)[1].strip()
+    return parts[1].strip()
 
 
 
