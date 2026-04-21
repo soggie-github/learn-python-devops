@@ -94,13 +94,13 @@ def main():
             config["threshold"],
             config["timeout"],
         )
-        alerts_to_sents = []
+        alerts_to_send = []
 
         for url, status, elapsed in api_results:
             if status == "DOWN":
-                alerts_to_sents.append(f"ALERT API DOWN: {url}")
+                alerts_to_send.append(f"ALERT API DOWN: {url}")
             elif status == "SLOW":
-                alerts_to_sents.append(
+                alerts_to_send.append(
                     f"ALERT API SLOW: {url} took {elapsed:.2f}s > {config['threshold']:.2f}s"
                 )
 
@@ -110,9 +110,9 @@ def main():
             state=log_state,
         )
 
-        alerts_to_sents.extend(log_alerts)
+        alerts_to_send.extend(log_alerts)
 
-        for message in alerts_to_sents:
+        for message in alerts_to_send:
             print(message)
             alert(message)
 
